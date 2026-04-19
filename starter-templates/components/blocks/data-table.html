@@ -1,0 +1,39 @@
+<!--
+COMPONENT: data-table
+VERSION: 1
+USE WHEN: tabular findings, cohort breakdown, cross-respondent signal matrix, comparison table.
+AVOID WHEN: fewer than 3 rows or 3 columns — use prose instead.
+SLOTS:
+  {{TABLE_TITLE}} — h2 label above the table
+  {{COL_*_HEAD}} — column headers
+  {{ROW_*_COL_*}} — row cells. Add class="r" for negative, "g" for positive, "m" for muted / italic.
+NOTE: This is a generic 3-row × 4-col scaffold. Agents edit row/column counts as needed.
+STYLES REQUIRED: table, th, td, td.r, td.g, td.m (defined in tokens/brand.css)
+-->
+<h2>{{TABLE_TITLE}}</h2>
+<table>
+  <tr>
+    <th>{{COL_1_HEAD}}</th>
+    <th>{{COL_2_HEAD}}</th>
+    <th>{{COL_3_HEAD}}</th>
+    <th>{{COL_4_HEAD}}</th>
+  </tr>
+  <tr>
+    <td>{{ROW_1_COL_1}}</td>
+    <td>{{ROW_1_COL_2}}</td>
+    <td>{{ROW_1_COL_3}}</td>
+    <td>{{ROW_1_COL_4}}</td>
+  </tr>
+  <tr>
+    <td>{{ROW_2_COL_1}}</td>
+    <td>{{ROW_2_COL_2}}</td>
+    <td>{{ROW_2_COL_3}}</td>
+    <td>{{ROW_2_COL_4}}</td>
+  </tr>
+  <tr>
+    <td>{{ROW_3_COL_1}}</td>
+    <td>{{ROW_3_COL_2}}</td>
+    <td>{{ROW_3_COL_3}}</td>
+    <td>{{ROW_3_COL_4}}</td>
+  </tr>
+</table>

@@ -1,0 +1,25 @@
+# workspace contents are user-specific — ignore files, but keep directory
+# structure + README.md files so the layout is self-documenting after clone
+workspace/**/*
+!workspace/**/
+!workspace/**/README.md
+
+# build artifacts
+*.pdf
+*.log
+
+# editors
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# agent/LSP metadata
+.serena/
+.claude/
+
+# node / js (if tooling added later)
+node_modules/
+dist/
+.cache/

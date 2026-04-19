@@ -1,0 +1,16 @@
+<!--
+COMPONENT: signal-box-positive
+VERSION: 1
+USE WHEN: closing a doc with forward momentum — "Universe & scale," "What's next," pipeline signal, adjacent cohorts in build. Sets up the next deliverable.
+AVOID WHEN: the content is speculative or forward-looking in a way that violates data-disclosure rules. Use for structural context (universe size, pipeline state), not forecasts.
+SLOTS:
+  {{POSITIVE_LABEL}} — mono eyebrow (e.g. "Universe & scale", "What's next")
+  {{POSITIVE_LEAD}} — bolded lead summarizing scope / scale
+  {{POSITIVE_BODY}} — 1–2 sentences of specifics (companion files, cohort status, etc.)
+STYLES REQUIRED: .signal-box, .signal-box.positive, .signal-box .box-lbl, .signal-box strong
+-->
+<div class="signal-box positive">
+  <div class="box-lbl">{{POSITIVE_LABEL}}</div>
+  <strong>{{POSITIVE_LEAD}}</strong>
+  {{POSITIVE_BODY}}
+</div>

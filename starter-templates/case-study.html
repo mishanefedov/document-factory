@@ -1,0 +1,110 @@
+<!--
+TEMPLATE: case-study
+VERSION: 1
+USE WHEN: 3–12 page formal research case study. See instructions/doc-types/case-study.md.
+NOTE: multi-page — uses .page-break-before class to force section-starts on new pages.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{DOC_TITLE}} — {{COMPANY_NAME}}</title>
+<link rel="stylesheet" href="../tokens/brand.css">
+<link rel="stylesheet" href="../tokens/print.css">
+<style>
+  .section { margin-bottom: 30px; }
+  .exec-summary { margin-bottom: 40px; }
+  p { margin-bottom: 10px; }
+  h2 { margin-top: 20px; }
+  h3 { font-family: var(--font-display); font-size: 18px; margin: 16px 0 8px; font-weight: 400; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">{{EYEBROW}}</div>
+  <h1>{{DOC_TITLE}}</h1>
+  <div class="subtitle">{{SUBTITLE}}</div>
+</header>
+
+<section class="exec-summary">
+  <h2>Executive summary</h2>
+  <div class="signal-box conclusion">
+    <div class="box-lbl">Conclusion</div>
+    <strong>{{EXEC_LEAD}}</strong>
+    {{EXEC_BODY}}
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n">{{STAT_1_N}}</div><div class="lbl">{{STAT_1_LBL}}</div></div>
+    <div class="stat"><div class="n">{{STAT_2_N}}</div><div class="lbl">{{STAT_2_LBL}}</div></div>
+    <div class="stat"><div class="n">{{STAT_3_N}}</div><div class="lbl">{{STAT_3_LBL}}</div></div>
+    <div class="stat"><div class="n">{{STAT_4_N}}</div><div class="lbl">{{STAT_4_LBL}}</div></div>
+  </div>
+</section>
+
+<section class="section page-break-before">
+  <h2>Introduction</h2>
+  <p>{{INTRO_BODY}}</p>
+</section>
+
+<section class="section">
+  <h2>Methodology</h2>
+  <p>{{METHODOLOGY_BODY}}</p>
+  <h3>Sample frame</h3>
+  <p>{{SAMPLE_BODY}}</p>
+  <h3>Instrument</h3>
+  <p>{{INSTRUMENT_BODY}}</p>
+</section>
+
+<section class="section page-break-before">
+  <h2>Findings</h2>
+  <p>{{FINDINGS_LEAD}}</p>
+  <!-- Agent inserts chart components / signal matrices here as needed -->
+  <blockquote>
+    "{{QUOTE_1_TEXT}}"
+    <div class="attr">{{QUOTE_1_ATTR}}</div>
+  </blockquote>
+  <p>{{FINDINGS_BODY}}</p>
+</section>
+
+<section class="section page-break-before">
+  <h2>Back-test framework</h2>
+  <p>{{BACKTEST_BODY}}</p>
+</section>
+
+<section class="section">
+  <h2>Implications</h2>
+  <p>{{IMPLICATIONS_BODY}}</p>
+</section>
+
+<section class="section">
+  <div class="caveats">
+    <h2>Caveats</h2>
+    <ul>
+      <li>{{CAVEAT_1}}</li>
+      <li>{{CAVEAT_2}}</li>
+      <li>{{CAVEAT_3}}</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section page-break-before">
+  <h2>Appendix A — Full instrument</h2>
+  <p>{{APPENDIX_A_BODY}}</p>
+</section>
+
+<section class="section page-break-before">
+  <h2>Appendix B — Cohort construction</h2>
+  <p>{{APPENDIX_B_BODY}}</p>
+</section>
+
+<footer>
+  <span>{{COMPANY_NAME}} · {{CONTACT_EMAIL}}</span>
+  <span>Prepared {{DATE}} · {{CONFIDENTIALITY}}</span>
+</footer>
+
+</div>
+</body>
+</html>

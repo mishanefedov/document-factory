@@ -1,0 +1,18 @@
+<!--
+COMPONENT: company-header
+VERSION: 1
+USE WHEN: top of any branded doc.
+SLOTS (brand-level, resolved at setup):
+  {{EYEBROW_DEFAULT}} — default eyebrow text (e.g. "{{COMPANY_NAME}} · Research Publication · Confidential"). Overridable per doc.
+SLOTS (content-level, resolved per doc):
+  {{EYEBROW}} — eyebrow text for this specific doc (falls back to {{EYEBROW_DEFAULT}})
+  {{DOC_TITLE}} — the display title (h1)
+  {{SUBTITLE}} — the italicized subtitle under the title
+STYLES REQUIRED: header, .eyebrow, h1, .subtitle (defined in tokens/brand.css)
+NOTE: For a doc with a logo, extend this with an inline SVG before the eyebrow. Agent wraps the eyebrow + h1 in a flex row with the logo on the right if needed.
+-->
+<header>
+  <div class="eyebrow">{{EYEBROW}}</div>
+  <h1>{{DOC_TITLE}}</h1>
+  <div class="subtitle">{{SUBTITLE}}</div>
+</header>

@@ -1,0 +1,16 @@
+<!--
+COMPONENT: signal-box-warn
+VERSION: 1
+USE WHEN: highlighting a methodology finding, caveat, or tension worth flagging. Typical use: "Why they answer" section in a one-pager, surfacing a proof point from the data.
+AVOID WHEN: the content belongs in body prose — don't overuse signal boxes.
+SLOTS:
+  {{WARN_LABEL}} — mono eyebrow text (e.g. "Why they answer", "Methodology finding", "Risk flag")
+  {{WARN_LEAD}} — bolded lead sentence
+  {{WARN_BODY}} — 1–3 sentences of elaboration with evidence
+STYLES REQUIRED: .signal-box, .signal-box.warn, .signal-box .box-lbl, .signal-box strong
+-->
+<div class="signal-box warn">
+  <div class="box-lbl">{{WARN_LABEL}}</div>
+  <strong>{{WARN_LEAD}}</strong>
+  {{WARN_BODY}}
+</div>

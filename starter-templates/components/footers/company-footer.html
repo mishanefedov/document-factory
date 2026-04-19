@@ -1,0 +1,16 @@
+<!--
+COMPONENT: company-footer
+VERSION: 1
+USE WHEN: bottom of any branded doc.
+SLOTS (brand-level, resolved at setup):
+  {{COMPANY_NAME}} — user's company or project name
+  {{CONTACT_EMAIL}} — user's primary contact email
+SLOTS (content-level, resolved per doc):
+  {{DATE}} — doc date, ISO format (YYYY-MM-DD) or human ("20 April 2026") — pick one and be consistent
+  {{CONFIDENTIALITY}} — confidentiality label (e.g. "Confidential", "For internal use", "Public draft") or empty
+STYLES REQUIRED: footer (defined in tokens/brand.css)
+-->
+<footer>
+  <span>{{COMPANY_NAME}} · {{CONTACT_EMAIL}}</span>
+  <span>Prepared {{DATE}} · {{CONFIDENTIALITY}}</span>
+</footer>

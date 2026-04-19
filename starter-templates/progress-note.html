@@ -1,0 +1,65 @@
+<!--
+TEMPLATE: progress-note
+VERSION: 1
+USE WHEN: 1–2 page state-of-play update to a single known reader. See instructions/doc-types/progress-note.md.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{DOC_TITLE}} — {{COMPANY_NAME}}</title>
+<link rel="stylesheet" href="../tokens/brand.css">
+<link rel="stylesheet" href="../tokens/print.css">
+<style>
+  /* progress-note-specific: tighter spacing, prose-forward */
+  p { margin-bottom: 10px; }
+  h2 { margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">{{EYEBROW}}</div>
+  <h1>{{DOC_TITLE}}</h1>
+  <div class="subtitle">{{SUBTITLE}}</div>
+</header>
+
+<div class="signal-box conclusion">
+  <div class="box-lbl">TL;DR</div>
+  <ul>
+    <li>{{TLDR_LI_1}}</li>
+    <li>{{TLDR_LI_2}}</li>
+    <li>{{TLDR_LI_3}}</li>
+    <li>{{TLDR_LI_4}}</li>
+  </ul>
+</div>
+
+<h2>Since last correspondence</h2>
+<p>{{SINCE_LAST_BODY}}</p>
+
+<h2>What we learned</h2>
+<p>{{LEARNED_BODY}}</p>
+
+<h2>What changed</h2>
+<p>{{CHANGED_BODY}}</p>
+
+<h2>Next steps</h2>
+<ul>
+  <li>{{NEXT_LI_1}}</li>
+  <li>{{NEXT_LI_2}}</li>
+  <li>{{NEXT_LI_3}}</li>
+</ul>
+
+<h2>What we need from you</h2>
+<p>{{ASK_BODY}}</p>
+
+<footer>
+  <span>{{COMPANY_NAME}} · {{CONTACT_EMAIL}}</span>
+  <span>Prepared {{DATE}} · {{CONFIDENTIALITY}}</span>
+</footer>
+
+</div>
+</body>
+</html>

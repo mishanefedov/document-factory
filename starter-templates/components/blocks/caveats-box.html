@@ -1,0 +1,18 @@
+<!--
+COMPONENT: caveats-box
+VERSION: 1
+USE WHEN: closing a calibration-stage research doc with honest disclosure of what the doc is NOT. Mandatory per workspace/conventions/data-disclosure.md for most calibration-stage artifacts.
+AVOID WHEN: the doc is a finished publication with full back-test already run — then the Caveats are in methodology, not as a standalone box.
+SLOTS:
+  {{CAVEAT_1}} through {{CAVEAT_N}} — individual caveats. Each caveat: what's at risk / what's not proven / what's limited. Specific to this doc, not boilerplate.
+STYLES REQUIRED: .cols, h2, ul, ul li, and optionally .caveats (defined in tokens/brand.css)
+NOTE: This renders as the right column of a two-col layout, paired with something like Back-test framework on the left. Agent can also use it as a single column.
+-->
+<div>
+  <h2>Caveats</h2>
+  <ul>
+    <li>{{CAVEAT_1}}</li>
+    <li>{{CAVEAT_2}}</li>
+    <li>{{CAVEAT_3}}</li>
+  </ul>
+</div>

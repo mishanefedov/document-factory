@@ -1,0 +1,128 @@
+<!--
+TEMPLATE: one-pager
+VERSION: 1
+USE WHEN: single-page research summary for one reader. See instructions/doc-types/one-pager.md for full spec.
+BRAND-LEVEL PLACEHOLDERS (resolve at setup):
+  {{COMPANY_NAME}}, {{DOMAIN}}, {{CONTACT_EMAIL}}, {{EYEBROW_DEFAULT}}
+CONTENT-LEVEL PLACEHOLDERS (resolve per doc):
+  All other {{PLACEHOLDERS}}
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{DOC_TITLE}} — {{COMPANY_NAME}}</title>
+<link rel="stylesheet" href="../tokens/brand.css">
+<link rel="stylesheet" href="../tokens/print.css">
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">{{EYEBROW}}</div>
+  <h1>{{DOC_TITLE}}</h1>
+  <div class="subtitle">{{SUBTITLE}}</div>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="n">{{STAT_1_N}}</div><div class="lbl">{{STAT_1_LBL}}</div></div>
+  <div class="stat"><div class="n">{{STAT_2_N}}</div><div class="lbl">{{STAT_2_LBL}}</div></div>
+  <div class="stat"><div class="n">{{STAT_3_N}}</div><div class="lbl">{{STAT_3_LBL}}</div></div>
+  <div class="stat"><div class="n">{{STAT_4_N}}</div><div class="lbl">{{STAT_4_LBL}}</div></div>
+</div>
+
+<div class="signal-box conclusion">
+  <div class="box-lbl">Conclusion</div>
+  <strong>{{CONCLUSION_LEAD}}</strong>
+  {{CONCLUSION_BODY}}
+</div>
+
+<div class="cols">
+  <div>
+    <h2>Methodology</h2>
+    <ul>
+      <li>{{METHOD_LI_1}}</li>
+      <li>{{METHOD_LI_2}}</li>
+      <li>{{METHOD_LI_3}}</li>
+      <li>{{METHOD_LI_4}}</li>
+    </ul>
+  </div>
+  <div>
+    <h2>What makes this dataset specific</h2>
+    <ul>
+      <li>{{SPECIFICITY_LI_1}}</li>
+      <li>{{SPECIFICITY_LI_2}}</li>
+      <li>{{SPECIFICITY_LI_3}}</li>
+      <li>{{SPECIFICITY_LI_4}}</li>
+    </ul>
+  </div>
+</div>
+
+<blockquote>
+  "{{QUOTE_TEXT}}"
+  <div class="attr">{{QUOTE_ATTR}}</div>
+</blockquote>
+
+<div class="signal-box warn">
+  <div class="box-lbl">Why they answer</div>
+  <strong>{{WHY_LEAD}}</strong>
+  {{WHY_BODY}}
+</div>
+
+<h2>{{TABLE_TITLE}}</h2>
+<table>
+  <tr>
+    <th>{{TABLE_COL_1_HEAD}}</th>
+    <th>{{TABLE_COL_2_HEAD}}</th>
+    <th>{{TABLE_COL_3_HEAD}}</th>
+    <th>{{TABLE_COL_4_HEAD}}</th>
+  </tr>
+  <tr>
+    <td>{{TABLE_ROW_1_COL_1}}</td>
+    <td>{{TABLE_ROW_1_COL_2}}</td>
+    <td>{{TABLE_ROW_1_COL_3}}</td>
+    <td>{{TABLE_ROW_1_COL_4}}</td>
+  </tr>
+  <tr>
+    <td>{{TABLE_ROW_2_COL_1}}</td>
+    <td>{{TABLE_ROW_2_COL_2}}</td>
+    <td>{{TABLE_ROW_2_COL_3}}</td>
+    <td>{{TABLE_ROW_2_COL_4}}</td>
+  </tr>
+</table>
+
+<div class="cols">
+  <div>
+    <h2>Back-test framework</h2>
+    <ul>
+      <li>{{BACKTEST_LI_1}}</li>
+      <li>{{BACKTEST_LI_2}}</li>
+      <li>{{BACKTEST_LI_3}}</li>
+      <li>{{BACKTEST_LI_4}}</li>
+    </ul>
+  </div>
+  <div class="caveats">
+    <h2>Caveats</h2>
+    <ul>
+      <li>{{CAVEAT_1}}</li>
+      <li>{{CAVEAT_2}}</li>
+      <li>{{CAVEAT_3}}</li>
+    </ul>
+  </div>
+</div>
+
+<div class="signal-box positive">
+  <div class="box-lbl">Universe &amp; scale</div>
+  <strong>{{UNIVERSE_LEAD}}</strong>
+  {{UNIVERSE_BODY}}
+</div>
+
+<footer>
+  <span>{{COMPANY_NAME}} · {{CONTACT_EMAIL}}</span>
+  <span>Prepared {{DATE}} · {{CONFIDENTIALITY}}</span>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!--
+COMPONENT: signal-box-conclusion
+VERSION: 1
+USE WHEN: opening a research doc with a front-loaded conclusion. Typically right after the hero stat row.
+AVOID WHEN: N/A — one conclusion box per doc, always.
+SLOTS:
+  {{CONCLUSION_LEAD}} — bolded opening sentence. Must work as a standalone summary of the finding (read-nothing-else test).
+  {{CONCLUSION_BODY}} — 2–3 follow-up sentences providing context or implication. Not another finding.
+STYLES REQUIRED: .signal-box, .signal-box.conclusion, .signal-box .box-lbl, .signal-box strong (defined in tokens/brand.css)
+-->
+<div class="signal-box conclusion">
+  <div class="box-lbl">Conclusion</div>
+  <strong>{{CONCLUSION_LEAD}}</strong>
+  {{CONCLUSION_BODY}}
+</div>

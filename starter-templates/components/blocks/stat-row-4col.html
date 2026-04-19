@@ -1,0 +1,19 @@
+<!--
+COMPONENT: stat-row-4col
+VERSION: 1
+USE WHEN: opening a research doc with 4 signal numbers (dispersion, inflection, anchor dates, universe size, key finding)
+AVOID WHEN: sample size is small and front-loading N hurts credibility. Use signal-first stats only — see workspace/conventions/data-disclosure.md.
+SLOTS:
+  {{STAT_1_N}}  — big numeral (e.g. "≥90d", "2,615", "~2yr", "4/4", "Q2 '26")
+  {{STAT_1_LBL}} — short label under it, sentence case (e.g. "Payment terms cited")
+  {{STAT_2_N}}, {{STAT_2_LBL}}
+  {{STAT_3_N}}, {{STAT_3_LBL}}
+  {{STAT_4_N}}, {{STAT_4_LBL}}
+STYLES REQUIRED: .stats, .stat, .stat .n, .stat .lbl (defined in tokens/brand.css)
+-->
+<div class="stats">
+  <div class="stat"><div class="n">{{STAT_1_N}}</div><div class="lbl">{{STAT_1_LBL}}</div></div>
+  <div class="stat"><div class="n">{{STAT_2_N}}</div><div class="lbl">{{STAT_2_LBL}}</div></div>
+  <div class="stat"><div class="n">{{STAT_3_N}}</div><div class="lbl">{{STAT_3_LBL}}</div></div>
+  <div class="stat"><div class="n">{{STAT_4_N}}</div><div class="lbl">{{STAT_4_LBL}}</div></div>
+</div>

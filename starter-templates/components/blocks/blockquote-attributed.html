@@ -1,0 +1,14 @@
+<!--
+COMPONENT: blockquote-attributed
+VERSION: 1
+USE WHEN: surfacing the highest-signal voice from the cohort. One per doc typically — pick the quote that best reveals what the methodology captures, not the most flattering one.
+AVOID WHEN: no consent for attribution — or when the quote is flattering without being revealing.
+SLOTS:
+  {{QUOTE_TEXT}} — the verbatim quote, no surrounding quote marks (the blockquote styling adds context)
+  {{QUOTE_ATTR}} — attribution per workspace/conventions/data-disclosure.md. Default: role + geography + date (e.g. "Tier-1 supplier, [region] — April 2026"). Named only with explicit consent.
+STYLES REQUIRED: blockquote, blockquote .attr (defined in tokens/brand.css)
+-->
+<blockquote>
+  "{{QUOTE_TEXT}}"
+  <div class="attr">{{QUOTE_ATTR}}</div>
+</blockquote>

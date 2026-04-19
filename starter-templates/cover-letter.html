@@ -1,0 +1,55 @@
+<!--
+TEMPLATE: cover-letter
+VERSION: 1
+USE WHEN: 1-page cover letter or print-formatted outreach. See instructions/doc-types/cover-letter.md.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{DOC_TITLE}} — {{COMPANY_NAME}}</title>
+<link rel="stylesheet" href="../tokens/brand.css">
+<link rel="stylesheet" href="../tokens/print.css">
+<style>
+  .letter { max-width: 620px; margin: 0 auto; }
+  .date-line { font-family: var(--font-mono); font-size: 10px; color: var(--color-muted); letter-spacing: 0.10em; margin-bottom: 30px; text-transform: uppercase; }
+  .letter p { margin-bottom: 14px; font-size: 14px; line-height: 1.6; }
+  .salutation { margin-bottom: 20px; }
+  .signature { margin-top: 30px; }
+  .signature .name { font-weight: 600; }
+  .signature .title { color: var(--color-muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap letter">
+
+<header>
+  <div class="eyebrow">{{EYEBROW}}</div>
+</header>
+
+<div class="date-line">{{DATE}}</div>
+
+<p class="salutation">Dear {{RECIPIENT_NAME}},</p>
+
+<p>{{OPENING_PARAGRAPH}}</p>
+
+<p>{{MIDDLE_PARAGRAPH}}</p>
+
+<p>{{CLOSING_PARAGRAPH}}</p>
+
+<div class="signature">
+  <p>With best regards,</p>
+  <p class="name">{{SENDER_NAME}}</p>
+  <p class="title">{{SENDER_TITLE}} · {{COMPANY_NAME}}</p>
+  <p class="title">{{CONTACT_EMAIL}}</p>
+</div>
+
+<footer>
+  <span>{{COMPANY_NAME}} · {{CONTACT_EMAIL}}</span>
+  <span>{{CONFIDENTIALITY}}</span>
+</footer>
+
+</div>
+</body>
+</html>

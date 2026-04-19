@@ -1,0 +1,33 @@
+<!--
+COMPONENT: two-col-list
+VERSION: 1
+USE WHEN: two related bulleted lists that a reader compares side-by-side. Typical uses: "Methodology / Structural context", "Friction / What's holding", "Back-test framework / Caveats".
+AVOID WHEN: the two lists aren't comparable — then they should be separate sections.
+SLOTS:
+  {{COL_1_HEADING}} — h2 eyebrow label for left column
+  {{COL_1_LI_1}} through {{COL_1_LI_N}} — bullets for left column (agent adds/removes <li> tags as needed)
+  {{COL_2_HEADING}} — h2 eyebrow label for right column
+  {{COL_2_LI_1}} through {{COL_2_LI_N}} — bullets for right column
+STYLES REQUIRED: .cols, h2, ul, ul li (defined in tokens/brand.css)
+NOTE: Add or remove <li> elements as needed. 3–5 bullets per column is typical. More than 7 and the column overflows the page.
+-->
+<div class="cols">
+  <div>
+    <h2>{{COL_1_HEADING}}</h2>
+    <ul>
+      <li>{{COL_1_LI_1}}</li>
+      <li>{{COL_1_LI_2}}</li>
+      <li>{{COL_1_LI_3}}</li>
+      <li>{{COL_1_LI_4}}</li>
+    </ul>
+  </div>
+  <div>
+    <h2>{{COL_2_HEADING}}</h2>
+    <ul>
+      <li>{{COL_2_LI_1}}</li>
+      <li>{{COL_2_LI_2}}</li>
+      <li>{{COL_2_LI_3}}</li>
+      <li>{{COL_2_LI_4}}</li>
+    </ul>
+  </div>
+</div>

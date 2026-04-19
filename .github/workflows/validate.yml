@@ -1,0 +1,72 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  markdown-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint markdown
+        uses: DavidAnson/markdownlint-cli2-action@v17
+        with:
+          config: '.markdownlint.json'
+          globs: |
+            **/*.md
+            !node_modules
+            !workspace/**
+
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check internal links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --exclude-mail
+            --exclude-path workspace/
+            --exclude-path node_modules/
+            'instructions/**/*.md'
+            'recipes/**/*.md'
+            'README.md'
+            'SETUP.md'
+            'CONTRIBUTING.md'
+            'CHANGELOG.md'
+          fail: true
+
+  structure-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify required top-level files exist
+        run: |
+          set -e
+          for f in README.md SETUP.md LICENSE CHANGELOG.md VERSION CONTRIBUTING.md .gitignore; do
+            if [ ! -f "$f" ]; then
+              echo "Missing required file: $f"
+              exit 1
+            fi
+          done
+          echo "All required top-level files present."
+
+      - name: Verify instructions/RESOLVER.md exists
+        run: test -f instructions/RESOLVER.md
+
+      - name: Verify starter-templates/tokens/*.css exist
+        run: test -f starter-templates/tokens/brand.css && test -f starter-templates/tokens/print.css
+
+      - name: Verify workspace/ is gitignored
+        run: |
+          git check-ignore -q workspace/any-file.html || {
+            echo "workspace/ should be gitignored"
+            exit 1
+          }
