@@ -4,6 +4,10 @@
 **/workspace/**/*
 !**/workspace/**/
 !**/workspace/**/README.md
+# …but the Next.js route that *serves* workspace files lives under
+# app/workspace/[...path]/ and is code, not user data.
+!packages/web/app/workspace/
+!packages/web/app/workspace/**
 
 # build artifacts
 *.pdf

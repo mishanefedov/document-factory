@@ -1,19 +1,39 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  type ForwardedRef,
+} from "react";
 import "@xterm/xterm/css/xterm.css";
 
 interface PtyMessage {
-  t: "data" | "exit" | "resize";
+  t: "data" | "exit" | "resize" | "restart";
   d?: string;
   code?: number;
   cols?: number;
   rows?: number;
 }
 
-export default function Terminal() {
+export interface TerminalHandle {
+  restart: () => void;
+}
+
+function TerminalInner(_props: Record<string, never>, ref: ForwardedRef<TerminalHandle>) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const bootedRef = useRef(false);
+  const wsRef = useRef<WebSocket | null>(null);
+
+  useImperativeHandle(ref, () => ({
+    restart: () => {
+      const ws = wsRef.current;
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ t: "restart" }));
+      }
+    },
+  }));
 
   useEffect(() => {
     if (bootedRef.current) return;
@@ -47,6 +67,7 @@ export default function Terminal() {
 
       const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
       const ws = new WebSocket(`${proto}//${window.location.host}/terminal`);
+      wsRef.current = ws;
 
       const sendResize = () => {
         try {
@@ -72,7 +93,10 @@ export default function Terminal() {
           return;
         }
         if (msg.t === "data" && typeof msg.d === "string") term.write(msg.d);
-        else if (msg.t === "exit") term.write(`\r\n[process exited ${msg.code ?? 0}]`);
+        else if (msg.t === "restart") {
+          term.reset();
+          sendResize();
+        } else if (msg.t === "exit") term.write(`\r\n[process exited ${msg.code ?? 0}]`);
       });
       ws.addEventListener("close", () => {
         term.write("\r\n[connection closed]\r\n");
@@ -110,3 +134,6 @@ export default function Terminal() {
 
   return <div ref={containerRef} style={{ width: "100%", height: "100%" }} />;
 }
+
+const Terminal = forwardRef<TerminalHandle>(TerminalInner);
+export default Terminal;

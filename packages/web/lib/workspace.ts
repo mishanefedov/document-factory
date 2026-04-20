@@ -5,13 +5,41 @@
  * so web routes can resolve paths safely.
  */
 
+import { existsSync } from "node:fs";
 import { readFile, stat } from "node:fs/promises";
-import { resolve, relative, sep } from "node:path";
+import { dirname, join, resolve, relative, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const DEFAULT_ROOT = resolve(process.cwd(), "workspace");
+// Resolve once, cache. Explicit env wins; otherwise walk upward from both
+// the caller's cwd and this file's location looking for an existing
+// `workspace/` — so `pnpm -F @document-factory/web dev` (cwd=packages/web)
+// still finds the repo-root workspace. Falls back to `$PWD/workspace`.
+let cachedRoot: string | null = null;
 
 export function workspaceRoot(): string {
-  return resolve(process.env.DF_WORKSPACE_DIR ?? DEFAULT_ROOT);
+  if (cachedRoot) return cachedRoot;
+  cachedRoot = resolveWorkspaceRoot();
+  return cachedRoot;
+}
+
+function resolveWorkspaceRoot(): string {
+  if (process.env.DF_WORKSPACE_DIR) {
+    return resolve(process.env.DF_WORKSPACE_DIR);
+  }
+  const here = dirname(fileURLToPath(import.meta.url));
+  const seen = new Set<string>();
+  for (const start of [process.cwd(), here]) {
+    let dir = start;
+    while (!seen.has(dir)) {
+      seen.add(dir);
+      const candidate = join(dir, "workspace");
+      if (existsSync(candidate)) return candidate;
+      const parent = dirname(dir);
+      if (parent === dir) break;
+      dir = parent;
+    }
+  }
+  return resolve(process.cwd(), "workspace");
 }
 
 export class WorkspaceError extends Error {

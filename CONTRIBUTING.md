@@ -26,7 +26,12 @@ document-factory/
 │   └── tokens/           — brand.css + print.css
 ├── recipes/              — prompt shortcuts (setup, build, add)
 ├── examples/             — public reference docs (generic / neutralized)
+├── packages/             — the editor + MCP server + core renderer
+│   ├── core/             — pure renderer (MDX + brand → HTML)
+│   ├── web/              — Next.js two-pane editor (terminal + preview)
+│   └── mcp-server/       — MCP tools over core operations
 ├── workspace/            — gitignored per-user layer (README stubs only)
+├── docs/                 — screenshots, diagrams referenced from README
 ├── SETUP.md              — bootstrap prompt for agents
 ├── README.md, LICENSE, CHANGELOG.md, VERSION
 └── .github/              — issue templates + CI workflows
@@ -78,7 +83,7 @@ Follow `recipes/add-new-component.md`. Components must:
 Use the [bug report template](.github/ISSUE_TEMPLATE/bug_report.md). Required:
 
 - Which doc-type you were building
-- Which coding agent you used (Claude Code, Cursor, Codex, Aider)
+- Which coding agent you used (Claude Code, OpenClaw, Cursor, Codex, Aider, Gemini CLI, …)
 - What the agent produced vs. what you expected
 - Any relevant prompt or instruction files you consulted
 

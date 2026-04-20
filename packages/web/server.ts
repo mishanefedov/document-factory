@@ -10,19 +10,52 @@
 
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { parse } from "node:url";
+import { chmodSync, existsSync, statSync } from "node:fs";
+import { createRequire } from "node:module";
 import next from "next";
 import { WebSocketServer, type WebSocket } from "ws";
 import { spawn, type IPty } from "node-pty";
 import chokidar, { type FSWatcher } from "chokidar";
-import { resolve, dirname } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+
+import { workspaceRoot } from "./lib/workspace";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const PORT = Number(process.env.PORT ?? 45367);
-const WORKSPACE_DIR = resolve(process.env.DF_WORKSPACE_DIR ?? "./workspace");
+const WORKSPACE_DIR = workspaceRoot();
+// Propagate the resolved workspace so tooling or child processes that read
+// the env (docs link routes, CLI invocations from the agent's shell) see the
+// same value the server resolved, not the raw user-provided one.
+process.env.DF_WORKSPACE_DIR = WORKSPACE_DIR;
 const AGENT_CMD = process.env.DF_AGENT_CMD ?? "claude";
+
+// node-pty ships a `spawn-helper` binary in prebuilds/<platform>-<arch>/.
+// On Unix, posix_spawnp execs that helper, which then execs the real agent.
+// Some install paths (notably pnpm) drop the +x bit when extracting the
+// tarball; posix_spawnp then fails with the unhelpful "posix_spawnp failed".
+// Fix it proactively at startup so a single bad install doesn't silently
+// brick the embedded terminal.
+function ensureSpawnHelperExecutable(): void {
+  try {
+    const require = createRequire(import.meta.url);
+    const ptyPkgJson = require.resolve("node-pty/package.json");
+    const ptyRoot = dirname(ptyPkgJson);
+    const helper = join(
+      ptyRoot,
+      "prebuilds",
+      `${process.platform}-${process.arch}`,
+      "spawn-helper"
+    );
+    if (!existsSync(helper)) return;
+    const mode = statSync(helper).mode;
+    if ((mode & 0o111) === 0) chmodSync(helper, mode | 0o755);
+  } catch {
+    // best-effort; spawn will surface a clearer error below if this fails
+  }
+}
 
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev, dir: __dirname });
@@ -78,6 +111,11 @@ const MAX_BUFFER_BYTES = 10_000;
 function spawnAgent(): TerminalSession {
   const cmd = AGENT_CMD.split(/\s+/);
   const [argv0, ...args] = cmd as [string, ...string[]];
+  if (!existsSync(WORKSPACE_DIR)) {
+    throw new Error(
+      `workspace directory does not exist: ${WORKSPACE_DIR} (set DF_WORKSPACE_DIR or create it)`
+    );
+  }
   const pty = spawn(argv0, args, {
     name: "xterm-256color",
     cols: 120,
@@ -101,20 +139,68 @@ function spawnAgent(): TerminalSession {
 }
 
 function onTerminalConnection(ws: WebSocket) {
-  const session = spawnAgent();
-  const { pty, buffer } = session;
-
+  let session: TerminalSession;
+  try {
+    session = spawnAgent();
+  } catch (err) {
+    const reason = err instanceof Error ? err.message : String(err);
+    const banner =
+      `\x1b[31mdocument-factory: failed to start agent "${AGENT_CMD}"\x1b[0m\r\n` +
+      `\x1b[90m${reason}\r\n` +
+      `Check that the binary is on $PATH, or override DF_AGENT_CMD.\x1b[0m\r\n`;
+    if (ws.readyState === ws.OPEN) {
+      ws.send(JSON.stringify({ t: "data", d: banner }));
+      ws.send(JSON.stringify({ t: "exit", code: 1 }));
+      ws.close();
+    }
+    console.error("[df-web] spawn failed:", reason);
+    return;
+  }
   // Replay buffer for reconnects / fresh connections.
-  for (const chunk of buffer) ws.send(JSON.stringify({ t: "data", d: chunk }));
+  for (const chunk of session.buffer) ws.send(JSON.stringify({ t: "data", d: chunk }));
 
-  const dataSub = pty.onData((d) => {
+  let dataSub = session.pty.onData((d) => {
     if (ws.readyState === ws.OPEN) ws.send(JSON.stringify({ t: "data", d }));
   });
-  const exitSub = pty.onExit(({ exitCode }) => {
+  let exitSub = session.pty.onExit(({ exitCode }) => {
     if (ws.readyState === ws.OPEN)
       ws.send(JSON.stringify({ t: "exit", code: exitCode }));
     ws.close();
   });
+
+  const restart = () => {
+    // Tear down the old pty without closing the socket.
+    dataSub.dispose();
+    exitSub.dispose();
+    try {
+      session.pty.kill();
+    } catch {
+      // already dead
+    }
+    try {
+      session = spawnAgent();
+    } catch (err) {
+      const reason = err instanceof Error ? err.message : String(err);
+      if (ws.readyState === ws.OPEN) {
+        ws.send(
+          JSON.stringify({
+            t: "data",
+            d: `\x1b[31mrestart failed: ${reason}\x1b[0m\r\n`,
+          })
+        );
+      }
+      return;
+    }
+    dataSub = session.pty.onData((d) => {
+      if (ws.readyState === ws.OPEN) ws.send(JSON.stringify({ t: "data", d }));
+    });
+    exitSub = session.pty.onExit(({ exitCode }) => {
+      if (ws.readyState === ws.OPEN)
+        ws.send(JSON.stringify({ t: "exit", code: exitCode }));
+      ws.close();
+    });
+    if (ws.readyState === ws.OPEN) ws.send(JSON.stringify({ t: "restart" }));
+  };
 
   ws.on("message", (raw) => {
     let msg: { t: string; d?: string; cols?: number; rows?: number };
@@ -123,15 +209,17 @@ function onTerminalConnection(ws: WebSocket) {
     } catch {
       return;
     }
-    if (msg.t === "data" && typeof msg.d === "string") pty.write(msg.d);
-    else if (msg.t === "resize" && msg.cols && msg.rows) pty.resize(msg.cols, msg.rows);
+    if (msg.t === "data" && typeof msg.d === "string") session.pty.write(msg.d);
+    else if (msg.t === "resize" && msg.cols && msg.rows)
+      session.pty.resize(msg.cols, msg.rows);
+    else if (msg.t === "restart") restart();
   });
 
   ws.on("close", () => {
     dataSub.dispose();
     exitSub.dispose();
     try {
-      pty.kill();
+      session.pty.kill();
     } catch {
       // already dead
     }
@@ -141,6 +229,14 @@ function onTerminalConnection(ws: WebSocket) {
 // ── Bootstrap ──────────────────────────────────────────────────────────────
 
 async function main() {
+  ensureSpawnHelperExecutable();
+  if (!existsSync(WORKSPACE_DIR)) {
+    console.warn(
+      `[df-web] WARNING: workspace does not exist: ${WORKSPACE_DIR}\n` +
+        `  Set DF_WORKSPACE_DIR to an existing workspace root, or create that directory.\n` +
+        `  The terminal will fail to spawn until this is fixed.`
+    );
+  }
   await nextApp.prepare();
   startWatcher();
 

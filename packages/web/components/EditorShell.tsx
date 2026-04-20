@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import Terminal from "./Terminal";
+import Terminal, { type TerminalHandle } from "./Terminal";
 import Preview from "./Preview";
 
 export interface DocEntry {
@@ -15,6 +15,7 @@ export default function EditorShell({ initialDocs }: { initialDocs: DocEntry[] }
   const [activeSlug, setActiveSlug] = useState<string | null>(
     initialDocs[0]?.slug ?? null
   );
+  const terminalRef = useRef<TerminalHandle | null>(null);
 
   // Refresh the document list when any reload event fires. Agents creating
   // new docs should show up automatically in the dropdown.
@@ -39,10 +40,17 @@ export default function EditorShell({ initialDocs }: { initialDocs: DocEntry[] }
       <section className="pane">
         <header className="pane-header">
           <span>Terminal</span>
+          <button
+            type="button"
+            onClick={() => terminalRef.current?.restart()}
+            title="Kill the current agent process and start a fresh one."
+          >
+            Restart
+          </button>
           <span style={{ color: "#444" }}>{getAgentLabel()}</span>
         </header>
         <div className="pane-body terminal-body">
-          <Terminal />
+          <Terminal ref={terminalRef} />
         </div>
       </section>
       <section className="pane">

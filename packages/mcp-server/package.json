@@ -1,6 +1,6 @@
 {
   "name": "@document-factory/mcp-server",
-  "version": "0.2.0-dev",
+  "version": "0.2.0",
   "description": "MCP server exposing document-factory tools to Claude Code, Cursor, Continue, Codex, Hermes, Gemini, OpenClaw.",
   "license": "MIT",
   "type": "module",
@@ -15,7 +15,11 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist", "README.md", "SPEC.md"],
+  "files": [
+    "dist",
+    "README.md",
+    "SPEC.md"
+  ],
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run",
