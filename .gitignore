@@ -1,8 +1,9 @@
-# workspace contents are user-specific — ignore files, but keep directory
-# structure + README.md files so the layout is self-documenting after clone
-workspace/**/*
-!workspace/**/
-!workspace/**/README.md
+# workspace contents are user-specific at ANY depth — ignore files, but keep
+# directory structure + README.md files so the layout is self-documenting
+# after clone.
+**/workspace/**/*
+!**/workspace/**/
+!**/workspace/**/README.md
 
 # build artifacts
 *.pdf
