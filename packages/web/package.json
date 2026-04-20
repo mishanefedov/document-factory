@@ -1,0 +1,54 @@
+{
+  "name": "@document-factory/web",
+  "version": "0.2.0-dev",
+  "description": "Web editor for document-factory. Two-pane: embedded terminal (your agent) + live HTML preview.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "df-web": "./bin/df-web.mjs"
+  },
+  "files": [
+    "bin",
+    "app",
+    "components",
+    "lib",
+    "public",
+    "server.ts",
+    "next-env.d.ts",
+    "next.config.mjs",
+    "tsconfig.json",
+    "README.md",
+    "ARCHITECTURE.md"
+  ],
+  "scripts": {
+    "dev": "NODE_ENV=development tsx server.ts",
+    "start": "NODE_ENV=production tsx server.ts",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf .next dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@document-factory/core": "workspace:*",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/xterm": "^5.5.0",
+    "chokidar": "^4.0.1",
+    "next": "^15.0.0",
+    "node-pty": "^1.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsx": "^4.19.1",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.0",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@types/ws": "^8.5.12",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
