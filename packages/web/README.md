@@ -23,7 +23,7 @@ npm install -g @document-factory/web
 df-web
 ```
 
-Then open `http://localhost:3000`.
+Then open `http://localhost:45367`.
 
 **Why npm first:** your terminal agent (Claude Code, Gemini CLI, etc.) already lives on your `$PATH`. Running `df-web` natively means the embedded terminal can call that exact binary, with your exact shell environment, without any bind-mount gymnastics. `DF_AGENT_CMD=codex df-web` just works — no rebuild, no image swap.
 
@@ -33,7 +33,7 @@ Then open `http://localhost:3000`.
 |---|---|---|
 | `DF_WORKSPACE_DIR` | `$PWD/workspace` | Path to your document-factory workspace. Agent's CWD + file-watcher root. |
 | `DF_AGENT_CMD` | `claude` | Shell command the PTY spawns. Can include args: `"aider --model sonnet"`. |
-| `PORT` | `3000` | HTTP + WebSocket port. |
+| `PORT` | `45367` | HTTP + WebSocket port. Chosen high-range to dodge the usual 3000/3001/8080 crowd. |
 
 Verified agents: `claude`, `codex`, `gemini`, `openclaw tui`, `hermes chat`, `cursor-agent`, `aider`, `/bin/zsh` (plain shell).
 
@@ -55,7 +55,7 @@ docker run --rm -it \
   -v "$PWD/workspace:/workspace" \
   -e DF_AGENT_CMD=claude \
   -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY \
-  -p 3000:3000 \
+  -p 45367:45367 \
   document-factory/web
 ```
 

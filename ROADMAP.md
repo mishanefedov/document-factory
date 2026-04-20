@@ -76,7 +76,7 @@ See [`packages/web/ARCHITECTURE.md`](packages/web/ARCHITECTURE.md) for the embed
 - Left pane: xterm.js mounted on a WebSocket bridged to a server-side node-pty.
 - Right pane: iframe `src="/preview/<doc-slug>"`, auto-reloaded via Server-Sent Events when the doc file changes.
 - Terminal command configurable via env var `DF_AGENT_CMD` (default `claude`).
-- One-line deploy: `docker run -v ./workspace:/workspace -p 3000:3000 document-factory/web`.
+- One-line deploy: `docker run -v ./workspace:/workspace -p 45367:45367 document-factory/web`.
 - ~2,500 LOC.
 
 ### Phase 4 — `cli` (week 5)

@@ -6,7 +6,7 @@
 
 - Zero learning curve for existing Claude Code / Cursor / Codex users. The terminal is the terminal.
 - Live preview that updates as the agent saves files.
-- Self-hostable: `docker run document-factory/web` and visit `localhost:3000`.
+- Self-hostable: `docker run document-factory/web` and visit `localhost:45367`.
 - Works with any agent that runs in a POSIX shell. Claude Code is the reference, but `codex`, `cursor-agent`, `aider`, even a plain `bash` session all work.
 
 ## Non-goals
@@ -45,7 +45,7 @@
 
 One `document-factory/web` container runs:
 
-- Next.js server (port 3000)
+- Next.js server (port 45367)
 - WebSocket for PTY (same port, upgrade path)
 - Optional: `@document-factory/mcp-server` sibling process, so agents inside the PTY can call MCP tools against the *same* workspace. Wired via `.claude.json` mounted into the container.
 - Optional: proxy to `@document-factory/pdf-service` running in sibling container (via `docker compose`).
@@ -137,7 +137,7 @@ Documents in `workspace/results/` are already rendered HTML (by the agent via MC
 services:
   web:
     image: document-factory/web:0.2
-    ports: ['3000:3000']
+    ports: ['45367:45367']
     volumes:
       - ./workspace:/workspace
       - ./.claude.json:/home/agent/.claude.json:ro
@@ -154,7 +154,7 @@ User's PATH to first doc:
 
 ```
 $ docker compose up
-$ open http://localhost:3000
+$ open http://localhost:45367
 [terminal pane shows claude prompt]
 > Draft a case study about X
 [agent works in terminal; right pane updates as files are written]

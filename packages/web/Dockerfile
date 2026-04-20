@@ -49,10 +49,10 @@ USER agent
 ENV NODE_ENV=production \
     DF_WORKSPACE_DIR=/workspace \
     DF_AGENT_CMD=claude \
-    PORT=3000
+    PORT=45367
 
 WORKDIR /app/packages/web
 
-EXPOSE 3000
+EXPOSE 45367
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["node", "node_modules/.bin/tsx", "server.ts"]

@@ -5,7 +5,7 @@
  *   - WebSocket at /terminal  -> node-pty bridge (xterm.js <-> shell)
  *   - Server-Sent Events at /api/sse/reload -> preview iframe reloads
  *
- * Listens on PORT (default 3000). Workspace resolved from DF_WORKSPACE_DIR.
+ * Listens on PORT (default 45367). Workspace resolved from DF_WORKSPACE_DIR.
  */
 
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
@@ -20,7 +20,7 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const PORT = Number(process.env.PORT ?? 3000);
+const PORT = Number(process.env.PORT ?? 45367);
 const WORKSPACE_DIR = resolve(process.env.DF_WORKSPACE_DIR ?? "./workspace");
 const AGENT_CMD = process.env.DF_AGENT_CMD ?? "claude";
 
