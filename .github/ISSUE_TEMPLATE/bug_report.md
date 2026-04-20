@@ -22,8 +22,9 @@ assignees: ''
 
 ## Environment
 
-- Coding agent: (Claude Code / Cursor / Codex / Aider / other)
-- Agent model: (e.g. claude-opus-4-7, gpt-4o, etc.)
+- Coding agent: (Claude Code / OpenClaw / Cursor / Codex / Aider / Gemini CLI / other)
+- Agent model: (e.g. claude-opus-4-7, gpt-4o, gemini-2.0-flash, etc.)
+- Running via: (the editor / plain agent CLI / MCP server)
 - `document-factory` version: (`cat VERSION`)
 - OS: (macOS / Linux / Windows)
 

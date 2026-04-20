@@ -1,6 +1,6 @@
 {
   "name": "@document-factory/core",
-  "version": "0.2.0-dev",
+  "version": "0.2.0",
   "description": "Stateless library: parse MDX docs, resolve brand tokens, render HTML, validate.",
   "license": "MIT",
   "type": "module",
@@ -12,7 +12,11 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist", "README.md", "API.md"],
+  "files": [
+    "dist",
+    "README.md",
+    "API.md"
+  ],
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run",

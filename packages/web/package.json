@@ -1,6 +1,6 @@
 {
   "name": "@document-factory/web",
-  "version": "0.2.0-dev",
+  "version": "0.2.0",
   "description": "Web editor for document-factory. Two-pane: embedded terminal (your agent) + live HTML preview.",
   "license": "MIT",
   "type": "module",

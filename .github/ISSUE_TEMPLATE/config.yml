@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and open-ended design discussions
+    url: https://github.com/mishanefedov/document-factory/discussions
+    about: Use Discussions for "what would it take to support X" and architecture questions. Reserve issues for reproducible bugs and scoped feature requests.
