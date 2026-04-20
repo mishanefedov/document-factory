@@ -3,13 +3,27 @@
   "version": "0.2.0-dev",
   "description": "Web editor for document-factory. Two-pane: embedded terminal (your agent) + live HTML preview.",
   "license": "MIT",
-  "private": true,
   "type": "module",
+  "bin": {
+    "df-web": "./bin/df-web.mjs"
+  },
+  "files": [
+    "bin",
+    "app",
+    "components",
+    "lib",
+    "public",
+    "server.ts",
+    "next-env.d.ts",
+    "next.config.mjs",
+    "tsconfig.json",
+    "README.md",
+    "ARCHITECTURE.md"
+  ],
   "scripts": {
     "dev": "NODE_ENV=development tsx server.ts",
-    "start": "NODE_ENV=production node --experimental-specifier-resolution=node --loader ./loader.mjs server.ts",
+    "start": "NODE_ENV=production tsx server.ts",
     "build": "next build",
-    "postbuild": "echo '(build step is next-only; server.ts runs via tsx)'",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "clean": "rm -rf .next dist *.tsbuildinfo"
@@ -23,6 +37,7 @@
     "node-pty": "^1.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "tsx": "^4.19.1",
     "ws": "^8.18.0"
   },
   "devDependencies": {
@@ -30,7 +45,6 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "@types/ws": "^8.5.12",
-    "tsx": "^4.19.1",
     "typescript": "^5.6.0",
     "vitest": "^2.1.0"
   },
