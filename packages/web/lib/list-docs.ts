@@ -17,9 +17,19 @@ export async function listDocs(): Promise<DocEntry[]> {
   const resultsDir = join(root, "results");
   try {
     const entries = await readdir(resultsDir, { withFileTypes: true });
-    return entries
-      .filter((e) => e.isFile() && e.name.endsWith(".mdx"))
-      .map((e) => ({ slug: e.name.replace(/\.mdx$/, ""), path: `results/${e.name}` }));
+    // Prefer .mdx when both extensions exist for the same slug (mdx is source,
+    // html is a pre-rendered output — source wins).
+    const bySlug = new Map<string, DocEntry>();
+    for (const e of entries) {
+      if (!e.isFile()) continue;
+      const m = e.name.match(/^(.+)\.(mdx|html)$/);
+      if (!m) continue;
+      const [, slug, ext] = m as [string, string, "mdx" | "html"];
+      const existing = bySlug.get(slug);
+      if (existing && existing.path.endsWith(".mdx")) continue;
+      bySlug.set(slug, { slug, path: `results/${e.name}` });
+    }
+    return [...bySlug.values()].sort((a, b) => a.slug.localeCompare(b.slug));
   } catch {
     return [];
   }
