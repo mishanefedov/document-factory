@@ -7,6 +7,22 @@ workspace/**/*
 # build artifacts
 *.pdf
 *.log
+coverage/
+.turbo/
+.next/
+.output/
+
+# node / js
+node_modules/
+dist/
+build/
+.cache/
+*.tsbuildinfo
+
+# env / secrets — never commit any of these
+.env
+.env.*
+!.env.example
 
 # editors
 .DS_Store
@@ -19,7 +35,5 @@ workspace/**/*
 .serena/
 .claude/
 
-# node / js (if tooling added later)
-node_modules/
-dist/
-.cache/
+# package manager caches
+.pnpm-store/

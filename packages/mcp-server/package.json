@@ -1,0 +1,39 @@
+{
+  "name": "@document-factory/mcp-server",
+  "version": "0.2.0-dev",
+  "description": "MCP server exposing document-factory tools to Claude Code, Cursor, Continue, Codex, Hermes, Gemini, OpenClaw.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "document-factory-mcp": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md", "SPEC.md"],
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/cli.js",
+    "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@document-factory/core": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
