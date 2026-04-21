@@ -31,7 +31,6 @@ jobs:
         with:
           args: >-
             --no-progress
-            --exclude-mail
             --exclude-path workspace/
             --exclude-path node_modules/
             'instructions/**/*.md'
