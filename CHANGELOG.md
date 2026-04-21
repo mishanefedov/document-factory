@@ -59,4 +59,4 @@ First private-preview scaffold.
 
 [Unreleased]: https://github.com/mishanefedov/document-factory/compare/v0.2.0...HEAD
 [0.2.0]: https://github.com/mishanefedov/document-factory/releases/tag/v0.2.0
-[0.1.0]: https://github.com/mishanefedov/document-factory/releases/tag/v0.1.0
+[0.1.0]: https://github.com/mishanefedov/document-factory/commit/65eafcb
