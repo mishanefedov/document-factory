@@ -23,7 +23,6 @@ export interface TerminalHandle {
 
 function TerminalInner(_props: Record<string, never>, ref: ForwardedRef<TerminalHandle>) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const bootedRef = useRef(false);
   const wsRef = useRef<WebSocket | null>(null);
 
   useImperativeHandle(ref, () => ({
@@ -36,11 +35,10 @@ function TerminalInner(_props: Record<string, never>, ref: ForwardedRef<Terminal
   }));
 
   useEffect(() => {
-    if (bootedRef.current) return;
-    bootedRef.current = true;
-
     let disposed = false;
-    let cleanup = () => {};
+    let cleanup = () => {
+      wsRef.current = null;
+    };
 
     (async () => {
       const [{ Terminal }, { FitAddon }] = await Promise.all([
@@ -123,6 +121,7 @@ function TerminalInner(_props: Record<string, never>, ref: ForwardedRef<Terminal
         } catch {
           /* */
         }
+        if (wsRef.current === ws) wsRef.current = null;
       };
     })();
 
